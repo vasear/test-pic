@@ -1,7 +1,40 @@
 /* Καθορίζουμε το χρώμα του φόντου */
 body {
   background-color: #f5f5f5;
+  background-image: url("stars.jpeg"); /* Αντικαταστήστε το "path/to/stars-background.jpg" με τον δρόμο προς την εικόνα σας */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
+
+/* Κίνηση των αστεριών */
+@keyframes starsAnimation {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100px, 100px); /* Μπορείτε να προσαρμόσετε τη μετατόπιση και τις διαστάσεις κίνησης */
+  }
+}
+
+/* Εφαρμογή της κίνησης στην εικόνα φόντου */
+body::after {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("stars.jpeg"); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.1; /* Ρυθμίζει τη διαφάνεια της κίνησης αστέρων */
+  pointer-events: none;
+  animation: starsAnimation 5s infinite alternate linear; /* Ρυθμίζει τη διάρκεια και τον τύπο της κίνησης */
+}
+
 
 /* Κεντράρουμε το περιεχόμενο της σελίδας */
 .container {
@@ -12,7 +45,7 @@ body {
 
 /* Καθορίζουμε το χρώμα και τη γραμματοσειρά για τίτλους */
 h1, h2, h3 {
-  color: #333;
+  color: red;
   font-family: Arial, sans-serif;
 }
 
