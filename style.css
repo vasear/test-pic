@@ -1,0 +1,40 @@
+/* Καθορίζουμε το χρώμα του φόντου */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Κεντράρουμε το περιεχόμενο της σελίδας */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Καθορίζουμε το χρώμα και τη γραμματοσειρά για τίτλους */
+h1, h2, h3 {
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+/* Καθορίζουμε το χρώμα και τη γραμματοσειρά για κείμενο */
+p {
+  color: #555;
+  font-family: "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+}
+
+/* Προσθέτουμε στιλ στο κουμπί λήψης φωτογραφίας */
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
