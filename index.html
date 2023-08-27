@@ -9,8 +9,45 @@
 	<h1>το πρωτο μουsite</h1>
 	<div>
   		<video id="video" width="640" height="480" autoplay></video>
-  		<button id="capture-btn">Λήψη Φωτογραφίας</button>
+  		<button class="button" onclick="takePhoto()">Λήψη Φωτογραφίας</button>
+  		<!-- Εμφάνιση της φωτογραφίας στον ιστότοπο -->
+		<img id="capturedPhoto" src="" alt="Φωτογραφία">
 	</div>
 	<canvas id="canvas" style="display: none;"></canvas>
+	
+	<script>
+	    // Συνάρτηση για να πάρετε τη φωτογραφία από την κάμερα
+	    function takePhoto() {
+	      const constraints = { video: true };
+
+	      navigator.mediaDevices.getUserMedia(constraints)
+		.then(function (stream) {
+		  const video = document.createElement('video');
+		  video.srcObject = stream;
+		  video.play();
+
+		  // Δημιουργία ενός canvas για να αποθηκεύσουμε την φωτογραφία
+		  const canvas = document.createElement('canvas');
+		  canvas.width = video.videoWidth;
+		  canvas.height = video.videoHeight;
+
+		  const context = canvas.getContext('2d');
+		  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+		  // Πάυση του stream και απελευθέρωση των πόρων της κάμερας
+		  const tracks = stream.getTracks();
+		  tracks.forEach(track => track.stop());
+
+		  // Εμφάνιση της φωτογραφίας στον ιστότοπο
+		const photo = new Image();
+		photo.src = canvas.toDataURL('image/jpeg'); // Η φωτογραφία θα είναι σε μορφή jpeg
+		document.getElementById("capturedPhoto").src = photo.src;
+		document.getElementById("capturedPhoto").style.display = "block"; // Εμφάνιση της εικόνας
+		})
+		.catch(function (error) {
+		  console.error('Σφάλμα κατά τη λήψη της φωτογραφίας:', error);
+		});
+	    }
+  	</script>
 </body>
 </html>
