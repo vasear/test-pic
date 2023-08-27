@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Ο Ιστότοπός του Βασίλη Μου</title>
-	<link rel="stylesheet" href="style.css">
+    <title>Camera Photo Capture</title>
 </head>
 <body>
-	<h1>το πρωτο μου site</h1>
-	<div>
-  		<video id="video" width="640" height="480" autoplay></video>
-  		<button class="button" onclick="takePhoto()">Λήψη Φωτογραφίας</button>
-	</div>
-	<canvas id="canvas" style="display: none;"></canvas>
-	
-	<script>
-	    function takePhoto() {
-	      const constraints = { video: true };
-
-	      navigator.mediaDevices.getUserMedia(constraints)
-		.then(function (stream) {
-		  const video = document.createElement('video');
-		  video.srcObject = stream;
-		  video.play();
-		  console.log('Video is playing:', video.paused);
-
-		  const canvas = document.createElement('canvas');
-		  canvas.width = video.videoWidth;
-		  canvas.height = video.videoHeight;
-
-		  const context = canvas.getContext('2d');
-		  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		  const tracks = stream.getTracks();
-		  tracks.forEach(track => track.stop());
-
-		  const photo = new Image();
-		  photo.src = canvas.toDataURL('image/jpeg');
-		  document.body.appendChild(photo);
-		})
-		.catch(function (error) {
-		  console.error('Σφάλμα κατά τη λήψη της φωτογραφίας:', error);
-		});
-	    }
-  	</script>
-</body>	
+    <h1>Camera Photo Capture</h1>
+    <video id="cameraFeed" autoplay></video>
+    <button id="captureButton">Capture Photo</button>
+    <canvas id="photoCanvas" style="display:none;"></canvas>
+    <img id="capturedPhoto" style="display:none;">
+    
+    <script>
+        const cameraFeed = document.getElementById('cameraFeed');
+        const captureButton = document.getElementById('captureButton');
+        const photoCanvas = document.getElementById('photoCanvas');
+        const capturedPhoto = document.getElementById('capturedPhoto');
+        
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                cameraFeed.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
+            }
+        }
+        
+        function capturePhoto() {
+            photoCanvas.width = cameraFeed.videoWidth;
+            photoCanvas.height = cameraFeed.videoHeight;
+            photoCanvas.getContext('2d').drawImage(cameraFeed, 0, 0);
+            capturedPhoto.src = photoCanvas.toDataURL('image/png');
+            capturedPhoto.style.display = 'inline';
+        }
+        
+        captureButton.addEventListener('click', capturePhoto);
+        
+        startCamera();
+    </script>
+</body>
 </html>
+
